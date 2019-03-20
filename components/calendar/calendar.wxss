@@ -1,0 +1,62 @@
+/* components/calendar/calendar.wxss */
+/* calendar */
+.toggle{
+  width: 26rpx;
+  height: 26rpx;
+  vertical-align: middle;
+}
+
+.calendar-title{
+  font-size: 32rpx;
+  text-align: center;
+}
+.calendar-title .strong{
+  color: #444;
+  font-weight: bold;
+}
+.calendar-title .gray{
+  color: #a8a8a8;
+  margin: 0 10rpx;
+}
+.calendar-picture{
+  width:94%;
+  margin:0 auto;
+  text-align: right;
+  position:relative;
+  margin-top:-13rpx;
+}
+.calendar-icon{
+  width: 42rpx;
+  height: 42rpx;
+
+}
+.calendar-day{
+  font-size: 18rpx;
+  position: absolute;
+  right: 12rpx;
+  top:15rpx;
+}
+.calendar-content-bar{
+  color: #04a7f3;
+  font-size: 26rpx;
+  text-align: center;
+}
+.bar-page{
+  width: 18rpx;
+  height: 28rpx;
+  margin: 0 70rpx;
+}
+.calendar-content-list{
+  width: 74%;
+  margin: 0 auto;
+  font-size: 24rpx;
+}
+.list-item{
+  display: inline-block;
+  margin: 10rpx 0;
+  width: 14%;
+  text-align: center;
+}
+.calendar-content-list .on{
+  color:#04a7f3;
+}

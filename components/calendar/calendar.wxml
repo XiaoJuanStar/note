@@ -1,0 +1,22 @@
+<!--components/calendar/calendar.wxml-->
+<view class='calendar'>
+  <view class='calendar-title' bindtap='showDateList'>
+    <text class='strong'>{{month}}月</text>
+    <text class="gray">{{year}}</text>
+    <image class='toggle' src='{{toggle}}'></image>
+  </view>
+  <view class='calendar-picture'>
+    <text class='calendar-day'>{{day}}</text>
+    <image class='calendar-icon' src='../../images/calendar.png'></image>
+  </view>
+  <view class='calendar-content' hidden="{{calendarShow}}">
+      <view class='calendar-content-bar'>
+        <image class='bar-page' src='../../images/left.png' bindtap="pageLeft"></image>
+        <text class='bar-center'>{{year}}年{{numMonth}}月</text>
+        <image class='bar-page' src='../../images/right.png' bindtap="pageRight"></image>
+      </view>
+      <view class='calendar-content-list'>
+        <text class='list-item {{item.class}}' wx:for="{{calendarList}}">{{item.date}}</text>
+      </view>
+  </view>
+</view>
