@@ -20,3 +20,15 @@
   margin-top: 200px;
 }
 
+/* 天气 */
+.weather{
+  margin-left: 3%;
+  font-size: 22rpx;
+  color:#aaa;
+}
+.weather-icon{
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: bottom;
+  margin-right: 5%;
+}

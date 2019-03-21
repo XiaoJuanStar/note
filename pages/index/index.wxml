@@ -1,9 +1,11 @@
 <!--index.wxml-->
 <view class="container">
+  <calendar ></calendar>
 
-
-<calendar ></calendar>
-
+  <view class='weather'>
+    <image class='weather-icon' src='{{weatherIcon}}'></image>
+    <text>{{temperature}}  {{weather}}</text>
+  </view>
 
 
   <view class="userinfo">
@@ -12,8 +14,5 @@
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
-  </view>
-  <view class="usermotto">
-    <text class="user-motto">{{motto}}</text>
   </view>
 </view>
