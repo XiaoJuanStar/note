@@ -1,0 +1,8 @@
+/* pages/takeNotes/takeNotes.wxss */
+
+.swiper-item{
+  width: 100%;
+  display: block;
+  overflow:hidden;
+  /* height: 240px; */
+}

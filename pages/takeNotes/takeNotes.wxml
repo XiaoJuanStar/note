@@ -1,0 +1,15 @@
+<!--pages/takeNotes/takeNotes.wxml-->
+<view class="container">
+ <swiper
+   indicator-dots="{{indicatorDots}}" 
+   indicator-color="rgba(0, 0, 0, .2)" 
+   indicator-active-color="#fff" 
+   duration="{{duration}}"
+   style='width:93%;height:240px;margin:0 auto;'>
+   <block wx:for="{{imageList}}" wx:key="*this">
+      <swiper-item>
+        <image class="swiper-item" src='{{item}}' bindtap='chioceImage'  mode="aspectFill"></image>
+      </swiper-item>
+   </block>
+  </swiper>
+</view>

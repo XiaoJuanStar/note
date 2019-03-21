@@ -42,9 +42,10 @@ Page({
       } else if (eatherDesc.indexOf('雨') > -1) {
         weatherIcon = '../../images/yutian.png'
       }
-      //weatherIcon
-          // let place = weatherData.currentCity 
+
+      // let place = weatherData.currentCity 
       that.setData({
+        weatherData: weatherData,
         weather: weatherDesc,
         temperature: temperature,
         weatherIcon: weatherIcon

@@ -50,6 +50,7 @@
   width: 74%;
   margin: 0 auto;
   font-size: 24rpx;
+  color:#aaa;
 }
 .list-item{
   display: inline-block;
