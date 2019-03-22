@@ -48,3 +48,49 @@
   bottom:3%;
   right: 3%;
 }
+.calendarList{
+  width: 94%;
+  margin: 0 auto;
+}
+.calendarList-item{
+  width:100%;
+  margin: 20rpx 0;
+  display: flex;
+  justify-content: space-between;
+}
+.calendarList-item-left{
+  width: 20%;
+  text-align: left;
+  font-size: 26rpx;
+  color: #aaa;
+  padding-top: 25rpx;
+}
+.calendarList-item-right{
+  width:80%;
+  padding: 25rpx 0;
+  border-top: 1rpx solid #d9d9d9;
+}
+.item-right-content_title{
+  font-size: 30rpx;
+  color: #353535;
+  margin-bottom: 20rpx;
+}
+.item-right-content{
+  color: #aaa;
+  display: flex;
+  /* align-items: center; */
+  justify-content: space-between;
+}
+.item-right-content-img{
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 5rpx; 
+}
+.item-right-footer{
+  font-size: 24rpx;
+  color: #aaa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 25rpx;
+}

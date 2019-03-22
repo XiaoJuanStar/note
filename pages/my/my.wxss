@@ -1,1 +1,43 @@
 /* pages/my/my.wxss */
+.my{
+  width: 94%;
+  margin: 0 auto;
+}
+.my-title{
+  font-size: 42rpx;
+  font-weight: bold;
+  color: #000;
+  margin: 20rpx 0 30rpx 20%;
+}
+.my-detail{
+  font-size: 32rpx;
+  color: #b8b8b8;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 30rpx 0 30rpx 20%;
+  margin-left:20%;
+}
+
+.my-picture{
+  width: 60rpx;
+  height: 60rpx;
+  border: 1rpx solid #f8f8f8;
+  border-radius: 60rpx;
+  vertical-align: middle; 
+}
+.my-notes image{
+  width: 40rpx;
+  height: 40rpx;
+  margin: 0 8%;
+  vertical-align: middle;
+}
+.number{
+  font-size: 32rpx;
+  color: #000;
+}
+.note-number{
+  font-size: 32rpx;
+  color: #b8b8b8;
+  margin-left: 7%;
+}

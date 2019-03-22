@@ -37,9 +37,9 @@ Page({
       let weatherIcon = '../../images/qingtian.png'
       if (weatherDesc.indexOf('云')>-1){
         weatherIcon = '../../images/duoyun.png'
-      } else if (eatherDesc.indexOf('阴') > -1){
+      } else if (weatherDesc.indexOf('阴') > -1){
         weatherIcon = '../../images/yintian.png'
-      } else if (eatherDesc.indexOf('雨') > -1) {
+      } else if (weatherDesc.indexOf('雨') > -1) {
         weatherIcon = '../../images/yutian.png'
       }
 

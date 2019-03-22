@@ -4,9 +4,36 @@
 
   <view class='weather' wx:if="{{weatherData!=undefined}}">
     <image class='weather-icon' src='{{weatherIcon}}'></image>
-    <text>{{temperature}}  {{weather}}</text>
+    <text>{{temperature}}     {{weather}}</text>
   </view>
 
+  <view class='calendarList'> 
+    <navigator url="/pages/noteDetail/noteDetail" hover-class="none">
+      <view class='calendarList-item'>
+        <view class='calendarList-item-left'>
+          <view>15</view>
+          <view>周五</view>
+        </view>
+        <view class='calendarList-item-right'>
+          <view class='item-right-content'>
+            <view>
+              <view class='item-right-content_title'>test</view>
+              <p>好啊啊好啊啊哈</p>
+            </view>
+            <image class='item-right-content-img' src="../../images/cameraImg.jpg"></image>
+          </view>
+        
+          <view class='item-right-footer'>
+            <text>14:25</text>
+            <view>
+              <image class='location-icon' src='../../images/ditu.png'></image>
+              <text>深圳市</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </navigator>
+  </view>
 
   <!-- 悬浮按钮 -->
   <navigator url='/pages/takeNotes/takeNotes'>

@@ -1,2 +1,13 @@
 <!--pages/my/my.wxml-->
-<text>pages/my/my.wxml</text>
+<view class='my'>
+<text class='my-title'>关于我</text>
+<view class='my-detail'>
+  <text>{{userInfo.nickName}}</text>
+  <image class='my-picture' src='{{userInfo.avatarUrl}}'></image>
+</view>
+<view class='my-notes'>
+  <image src='../../images/book.png'></image>
+  <text class='number'>4</text>
+  <text class='note-number'>日记数量</text>
+</view>
+</view>

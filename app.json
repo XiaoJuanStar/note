@@ -3,13 +3,14 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/my/my",
-    "pages/takeNotes/takeNotes"
+    "pages/takeNotes/takeNotes",
+    "pages/noteDetail/noteDetail"
   ],
   "permission": {
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序天气效果展示"
     },
-    "scope.camera":{
+    "scope.camera": {
       "desc": "拍照用于上传记录封面"
     }
   },

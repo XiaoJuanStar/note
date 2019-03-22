@@ -6,3 +6,46 @@
   overflow:hidden;
   /* height: 240px; */
 }
+.date{
+  width: 94%;
+  margin: 20rpx auto;
+  font-size: 22rpx;
+  color:#aaa;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.write-icon{
+  width: 32rpx;
+  height: 32rpx;
+  vertical-align: middle;
+}
+.title,.content{
+  width: 94%;
+  margin: 2% auto;
+}
+.title-input{
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #353535;
+}
+.content{
+  font-size: 28rpx;
+  color:#353535
+}
+.save{
+  width: 100rpx;
+  height: 40rpx;
+  line-height: 40rpx;
+  color:#1296db;
+  text-align: center;
+  font-size: 24rpx;
+  background: #fff;
+  border: 1 rpx solid #fff; 
+  border-radius: 20rpx;
+  opacity: 0.8;
+  box-shadow:2px 2px 5px #333333;
+  position: fixed;
+  bottom:5%;
+  right: 5%;
+}

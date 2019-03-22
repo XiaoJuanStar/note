@@ -1,0 +1,22 @@
+<!--pages/noteDetail/noteDetail.wxml-->
+<view class='detail'>
+  <view class='date'>2019/03/22</view>
+  <view class='title'>test</view>
+  <view class="content">hahahahhhaha</view>
+  <view class='location'>
+    <image class='location-icon' src="../../images/ditu.png"></image>
+    <text>深圳市</text>
+  </view>
+</view>
+
+
+<view class='footer'>
+  <view class='footer-item'>
+    <image class='footer-item-image' src='../../images/xiugai.png'></image>
+    <text>修改日记</text>
+  </view>
+  <view class='footer-item' bindtap='deleteNote'>
+    <image class='footer-item-image' src='../../images/shanchu.png'></image>
+    <text>删除日记</text>
+  </view>
+</view>
