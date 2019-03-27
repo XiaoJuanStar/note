@@ -2,7 +2,7 @@
 <view class='my'>
 <text class='my-title'>关于我</text>
 <view class='my-detail'>
-  <text wx:if="userInfo.nickName!=undefined">{{userInfo.nickName}}</text>
+  <text wx:if="userInfo.nickName!=null">{{userInfo.nickName}}</text>
   <text wx:else>小可爱</text>
   <image class='my-picture' src='{{userInfo.avatarUrl}}'></image>
 </view>

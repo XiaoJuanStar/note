@@ -1,8 +1,9 @@
 <!--pages/noteDetail/noteDetail.wxml-->
 <view class='detail'>
-  <view class='date'>2019/03/22</view>
-  <view class='title'>test</view>
-  <view class="content">hahahahhhaha</view>
+<image wx:if="{{detailData.note_picture!=null}}" class='' src="{{detailData.note_picture}}"></image>
+  <view class='date'>{{detailData.date}}</view>
+  <view class='title'>{{detailData.note_title}}</view>
+  <view class="content">{{detailData.note_content}}</view>
   <view class='location'>
     <image class='location-icon' src="../../images/ditu.png"></image>
     <text>深圳市</text>
@@ -11,7 +12,7 @@
 
 
 <view class='footer'>
-  <view class='footer-item'>
+  <view class='footer-item' bindtap='updateNotes'>
     <image class='footer-item-image' src='../../images/xiugai.png'></image>
     <text>修改日记</text>
   </view>

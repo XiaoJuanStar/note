@@ -42,7 +42,7 @@
   background: #1296db;
   border: 1 rpx solid #1296db; 
   border-radius: 80rpx;
-  opacity: 0.8;
+  /* opacity: 1; */
   box-shadow:1px 1px 2px #333333;
   position: fixed;
   bottom:3%;
@@ -78,6 +78,7 @@
 .item-right-content{
   color: #aaa;
   display: flex;
+  font-size: 30rpx;
   /* align-items: center; */
   justify-content: space-between;
 }
@@ -93,4 +94,8 @@
   align-items: center;
   justify-content: space-between;
   margin-top: 25rpx;
+}
+.nothing{
+  margin: 6% auto;
+  font-size: 26rpx;
 }

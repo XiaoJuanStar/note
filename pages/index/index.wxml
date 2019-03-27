@@ -7,27 +7,29 @@
     <text>{{temperature}}     {{weather}}</text>
   </view>
 
-  <view class='calendarList'> 
-    <navigator url="/pages/noteDetail/noteDetail" hover-class="none">
+  <view class='nothing' wx:if="{{calendarList.length<1}}">暂时没有日记，按右下方按钮开始创建日记吧！</view>
+  <view class='calendarList' wx:else> 
+    <navigator url="/pages/noteDetail/noteDetail?id={{item.id}}" hover-class="none" wx:for="{{calendarList}}">
       <view class='calendarList-item'>
         <view class='calendarList-item-left'>
-          <view>15</view>
-          <view>周五</view>
+          <view>{{item.date}}</view>
+          <view>{{item.day}}</view>
         </view>
         <view class='calendarList-item-right'>
           <view class='item-right-content'>
             <view>
-              <view class='item-right-content_title'>test</view>
-              <p>好啊啊好啊啊哈</p>
+              <view class='item-right-content_title'>{{item.note_title}}</view>
+              <p>{{item.note_content}}</p>
             </view>
-            <image class='item-right-content-img' src="../../images/cameraImg.jpg"></image>
+            <image wx:if="{{item.src!=null}}" class='item-right-content-img' mode="aspectFill" src="{{item.src}}"></image>
           </view>
         
           <view class='item-right-footer'>
-            <text>14:25</text>
+            <text>{{item.time}}</text>
             <view>
               <image class='location-icon' src='../../images/ditu.png'></image>
-              <text>深圳市</text>
+              <text wx:if="{{item.note_place !== null}}">{{item.note_place}}</text>
+               <text wx:else>中国</text>
             </view>
           </view>
         </view>

@@ -34,18 +34,18 @@
   color:#353535
 }
 .save{
-  width: 100rpx;
-  height: 40rpx;
-  line-height: 40rpx;
+  width: 130rpx;
+  height: 50rpx;
+  line-height: 50rpx;
   color:#1296db;
   text-align: center;
   font-size: 24rpx;
   background: #fff;
   border: 1 rpx solid #fff; 
   border-radius: 20rpx;
-  opacity: 0.8;
-  box-shadow:2px 2px 5px #333333;
+  box-shadow:2rpx 2rpx 5rpx #333333;
   position: fixed;
   bottom:5%;
   right: 5%;
 }
+

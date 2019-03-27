@@ -6,7 +6,7 @@
    indicator-active-color="#fff" 
    duration="{{duration}}"
    style='width:93%;height:240px;margin:0 auto;'>
-   <block wx:for="{{imageList}}" wx:key="*this">
+   <block wx:for="{{imageList}}" wx:key="*this" wx:if="{{imageList.length>0}}">
       <swiper-item>
         <image class="swiper-item" src='{{item}}' bindtap='chioceImage'  mode="aspectFill"></image>
       </swiper-item>
@@ -14,16 +14,20 @@
   </swiper>
 
   <view class='date'>
-    <text>2019/03/22</text>
+    <text>{{todayDate}}</text>
     <image class='write-icon' src="../../images/wenben.png"></image>
   </view>
 
-  <view class='title'>
-    <input class='title-input' placeholder='标题'></input>
-  </view>
-  <view class='content'>
-    <textarea placeholder='请输入正文'></textarea>
-  </view>
+  <form bindsubmit="saveNotes">
+    <view class='title'>
+      <input class='title-input' placeholder='标题' name="title" value="{{title}}"></input>
+    </view>
+    <view class='content'>
+      <textarea placeholder='请输入正文' name="content" value="{{content}}"></textarea>
+    </view>
+    <button class='save' form-type="submit">保存</button>
+  </form>
 
-  <view class='save'>保存</view>
+
+  
 </view>

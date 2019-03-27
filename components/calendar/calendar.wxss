@@ -22,8 +22,7 @@
   width:94%;
   margin:0 auto;
   text-align: right;
-  position:relative;
-  margin-top:-13rpx;
+  position: relative;
 }
 .calendar-icon{
   width: 42rpx;
@@ -32,8 +31,8 @@
 }
 .calendar-day{
   font-size: 18rpx;
-  position: absolute;
-  right: 12rpx;
+  position:absolute;
+  right:1.4%;
   top:15rpx;
 }
 .calendar-content-bar{
