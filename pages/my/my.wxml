@@ -8,7 +8,7 @@
 </view>
 <view class='my-notes'>
   <image src='../../images/book.png'></image>
-  <text class='number'>4</text>
+  <text class='number'>{{number}}</text>
   <text class='note-number'>日记数量</text>
 </view>
 </view>

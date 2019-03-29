@@ -6,7 +6,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    number:0,
   },
 
   /**
@@ -16,12 +16,6 @@ Page({
     this.setData({
       userInfo: app.globalData.userInfo
     })
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
 
   },
 
@@ -29,22 +23,11 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    this.getNumber();
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
 
-  },
 
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
@@ -65,5 +48,27 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+  getNumber(){
+    const jwt = wx.getStorageSync('jwt');
+    console.log('jwt:' + jwt);
+    if (jwt != null && jwt.indexOf('<') < 0) {
+      //获取日记列表
+      wx.request({
+        url: app.globalData.url + 'notes/notes/getNotesList',
+        method: 'post',
+        data: {
+          token: wx.getStorageSync('jwt')
+        },
+        success: (res) => {
+          console.log('日记数量')
+          let data = res.data;
+          console.log(data);
+          this.setData({
+            number: res.data.length || 0
+          })
+        }
+      })
+    }
+  },
 })

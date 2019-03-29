@@ -75,6 +75,14 @@
   color: #353535;
   margin-bottom: 20rpx;
 }
+.item-right-content_text{
+ margin-right:5rpx;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ display: -webkit-box;
+ -webkit-box-orient:vertical;
+ -webkit-line-clamp: 2;
+}
 .item-right-content{
   color: #aaa;
   display: flex;
@@ -83,9 +91,9 @@
   justify-content: space-between;
 }
 .item-right-content-img{
-  width: 160rpx;
-  height: 160rpx;
+  height: 150rpx;
   border-radius: 5rpx; 
+  width:26%;
 }
 .item-right-footer{
   font-size: 24rpx;
@@ -98,4 +106,7 @@
 .nothing{
   margin: 6% auto;
   font-size: 26rpx;
+}
+.item-right-content_tap{
+  width: 70%;
 }

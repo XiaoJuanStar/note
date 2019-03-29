@@ -48,4 +48,7 @@
   bottom:5%;
   right: 5%;
 }
-
+textarea {
+  width:100%;
+  height: 200px;
+}

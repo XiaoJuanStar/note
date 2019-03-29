@@ -12,7 +12,7 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    calendarList:[]
+    calendarList:[],
   },
   //事件处理函数
   bindViewTap: function() {
@@ -21,11 +21,11 @@ Page({
     })
   },
   onLoad: function () {
+    console.log('onLoad')
     let that = this;
-    this.getUserInfo();
-    if (app.globalData.userInfo == null || app.globalData.userInfo == undefined) {
-      this.getUser();
-    }
+    // this.getUser();
+
+    // that.getUser();
     //新建百度地图对象
     let BMap = new bmap.BMapWX({
       ak:'W7hAvDTOExW6AkI4madc834p21EZwmGx'
@@ -37,7 +37,8 @@ Page({
       let weatherData = data.currentWeather[0];
       let temperature = weatherData.date;
       temperature = temperature.substr(temperature.length - 4).split(')')[0];
-      let weatherDesc = weatherData.weatherDesc;
+      let des = weatherData.weatherDesc;
+      let weatherDesc = des.substr(des.length-1);
       let weatherIcon = '../../images/qingtian.png'
       if (weatherDesc.indexOf('云')>-1){
         weatherIcon = '../../images/duoyun.png'
@@ -51,7 +52,7 @@ Page({
       // let place = weatherData.currentCity 
       that.setData({
         weatherData: weatherData,
-        weather: weatherDesc,
+        weather: des,
         temperature: temperature,
         weatherIcon: weatherIcon,
       });
@@ -91,29 +92,39 @@ Page({
       })
     }
 
-  
   },
   onShow:function(){
+    console.log('onshow')
+  // if(app.globalData.pageType ===1){
+
+  // }else{
+    this.getUser()
+  // }
+   
     
-    this.getCalendarList();
+  },
+  onReady() {
+    console.log('onReady')
+    // Do something when page ready.
     
   },
   getUser(){
-    // 登录
+    console.log('1')
+    //用户没有授权的时候第一次调用
+    let that = this;
     wx.login({
       success: res => {
         this.code = res.code;
-        console.log(res);
-        // 发送 res.code 到后台换取 openId, sessionKey, unionId
       }
     })
     // 获取用户信息
     wx.getSetting({
       success: res => {
         if (res.authSetting['scope.userInfo'] && this.code!=null) {
+          console.log('2')
           wx.getUserInfo({
             success: res => {
-              console.log(res);
+              // console.log(res);
               app.globalData.userInfo = res.userInfo
               const { encryptedData, iv } = res || res.detail;
               wx.request({
@@ -126,7 +137,8 @@ Page({
                 },
                 success(res) {
                   let jwt = res.data;
-                  wx.setStorageSync('jwt', jwt)
+                  wx.setStorageSync('jwt', jwt);
+                  that.getCalendarList(jwt);
                 }
               })
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -140,10 +152,11 @@ Page({
       }
     })
   },
-  getCalendarList:function(){
-    const jwt = wx.getStorageSync('jwt');
-    console.log('jwt:'+jwt);
-    if (jwt != null && jwt.indexOf('<')<0){
+  getCalendarList: function (jwt){
+    wx.showLoading({
+      title: '加载中',
+    })
+    if (jwt != null && jwt.toString().indexOf('<')<0){
       //获取日记列表
       wx.request({
         url: app.globalData.url + 'notes/notes/getNotesList',
@@ -152,11 +165,10 @@ Page({
           token: wx.getStorageSync('jwt')
         },
         success: (res) => {
-          console.log('获取日记列表')
-          // console.log(res);
+          wx.hideLoading()
+          console.log('获取日记列表');
           let data = res.data;
           let tempData = [];
-          console.log('222')
           console.log(data);
           if (data != null && data.length>0){
             for (let i = 0; i < data.length; i++) {
@@ -171,8 +183,6 @@ Page({
               calendarList: tempData || []
             })
           }
-          
-          console.log(this.data.calendarList)
         }
       })
     }
@@ -180,16 +190,16 @@ Page({
 
    
   },
-  getUserInfo: function(e) {
+  getUserInfo: function(code) {
     var that = this;
     wx.getUserInfo({
       success(res) {
         const userInfo = res.userInfo
         console.log('userInfo')
         console.log(userInfo)
-        app.globalData.userInfo = res.userInfo
+        app.globalData.userInfo = userInfo
         that.setData({
-          userInfo: res.userInfo,
+          userInfo: userInfo,
           hasUserInfo: true
         })
       }
@@ -197,6 +207,5 @@ Page({
     
   },
   
- 
 })
 

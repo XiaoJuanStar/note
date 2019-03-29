@@ -42,3 +42,12 @@
   height: 28rpx;
   vertical-align: middle;
 }
+.swiper-item{
+  width: 100%;
+  display: block;
+  overflow:hidden;
+}
+textarea {
+  width:100%;
+  height: 200px;
+}

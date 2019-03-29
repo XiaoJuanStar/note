@@ -14,6 +14,7 @@ App({
   globalData: {
     url:'https://www.ableya.cn/',
     userInfo: null,
-    place:''
+    place:'',
+    pageType:0,
   }
 })

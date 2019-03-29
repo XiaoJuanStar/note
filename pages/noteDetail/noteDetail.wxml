@@ -1,9 +1,22 @@
 <!--pages/noteDetail/noteDetail.wxml-->
 <view class='detail'>
-<image wx:if="{{detailData.note_picture!=null}}" class='' src="{{detailData.note_picture}}"></image>
+<swiper
+   indicator-dots="{{indicatorDots}}" 
+   indicator-color="rgba(0, 0, 0, .2)" 
+   indicator-active-color="#fff" 
+   duration="{{duration}}"
+   style='width:100%;height:240px;margin:0 auto;'
+   wx:if="{{src.length>0}}">
+   <block wx:for="{{src}}" wx:key="*this">
+      <swiper-item>
+        <image class="swiper-item" src='{{item}}' bindtap='chioceImage'  mode="aspectFill"></image>
+      </swiper-item>
+   </block>
+  </swiper>
+
   <view class='date'>{{detailData.date}}</view>
   <view class='title'>{{detailData.note_title}}</view>
-  <view class="content">{{detailData.note_content}}</view>
+  <textarea class="content">{{detailData.note_content}}</textarea> 
   <view class='location'>
     <image class='location-icon' src="../../images/ditu.png"></image>
     <text>深圳市</text>

@@ -9,13 +9,14 @@ Page({
     tempImg:[],
     title:'',
     content:'',
+    noteId:null,
   },
   onLoad: function (options) {
-    console.log(options)
-    if (options.id !== null){
-      // this.setData({
-      //   noteId: options.id
-      // })
+    console.log(options.id)
+    if (options.id){
+      this.setData({
+        noteId:options.id
+      })
       this.getNotesDetail(options.id);
     }else{
       this.setData({
@@ -23,39 +24,75 @@ Page({
       })
     }
   },
-  chioceImage(){
+  onUnload() {
+    // wx.showModal({
+    //   title: '提示',
+    //   content: '你要狠心舍弃已编辑的日记吗？',
+    //   success(res) {
+    //     if (res.confirm) {
+    //       console.log('用户点击确定')
+    //       wx.navigateBack({
+    //         delta: 999
+    //       })
+    //     } else if (res.cancel) {
+          
+    //     }
+    //   }
+    // })
+  },
+  chioceText(){
     let that = this;
-    wx.chooseImage({
-    sizeType: ['original', 'compressed'],
-    sourceType: ['album', 'camera'],
-    success(res) {
-      const tempFilePaths = res.tempFilePaths[0]
-      wx.uploadFile({
-        url: app.globalData.url +'upload/uploadImg',
-        filePath: tempFilePaths,
-        name: 'upload',
-        formData: {
-          upload: 'upload'
+    uploadImg(function (data) {
+      let url = data.src;
+      const jwt = wx.getStorageSync('jwt');
+      wx.request({
+        url: app.globalData.url + 'ocr/distinguish',
+        method: 'post',
+        header: {
+          'Authorization': jwt
         },
-        success(res) {
-          const data = JSON.parse(res.data);
+        data: {
+          src:url
+        },
+        success: (res) => {
+          console.log('识别文字接口')
+          let data = res.data;
           console.log(data);
-          that.data.tempImg.push(data.src);
-          that.setData({
-            imageList: that.data.tempImg
-          })
-          console.log('已上传的图片')
-          console.log(that.data.tempImg);
+          let textLength = data.words_result_num;
+          if (textLength>0){
+            let text = data.words_result;
+            let str = that.data.content + '\n';
+            text.forEach(item =>{
+              str += item.words +  '\n';
+            })
+            that.setData({
+              content: str
+            })
+          }
+ 
+      
         }
       })
-
-    }
-  })
+    });
+  },
+  chioceImage(){
+    let that = this;
+    uploadImg(function(data){
+      that.data.tempImg.push(data.src);
+      that.setData({
+        imageList: that.data.tempImg
+      })
+      console.log('已上传的图片')
+      console.log(that.data.tempImg);
+    })
   },
   saveNotes(e){
     const {tempImg} = this.data;
     let title = e.detail.value.title;
     let content = e.detail.value.content;
+    console.log('===')
+    console.log(content.indexOf('\n'));
+    // content = content.split('\n').join('&ntt|&')
     const jwt = wx.getStorageSync('jwt');
     let msg = '';
     if (title == ''){
@@ -63,6 +100,7 @@ Page({
     }else if(content == ''){
       msg = '请填写正文'
     }else{
+      let src = this.data.noteId ? this.data.imageList:this.data.tempImg.join();
       wx.request({
         url: app.globalData.url + 'notes/notes/saveNotes',
         method: 'post',
@@ -70,20 +108,26 @@ Page({
           'Authorization': jwt
         },
         data: {
+          id: this.data.noteId ? this.data.noteId:undefined,
           token: jwt,
           title: title,
           content: content,
-          src: this.data.tempImg.join(),
+          src: src[0] == "../../images/cameraImg.jpg" ? "" : src,
           place:app.globalData.place
         },
         success: (res) => {
           console.log('保存日记接口')
           console.log(res.data);
-          if (JSON.parse(res.data).result){
+          let data = res.data;
+          if (data.result){
             wx.navigateBack({
-              delta: 1
+              delta: 999
             })
           }
+        },
+        error:(err)=>{
+          msg = err;
+          console.log(err);
         }
       })
     }
@@ -106,15 +150,48 @@ Page({
         res.data[0]['date'] = utils.formatTime(new Date(res.data[0].created_at));
         let src = res.data[0].note_picture === null ? [] : res.data[0].note_picture.split(',')
         this.setData({
-          detailData: res.data[0],
-          imageList: src,
           todayDate: res.data[0]['date'],
           title: res.data[0].note_title+'',
-          content: res.data[0].note_content+''
+          content: res.data[0].note_content+'',
+          imageList: src[0] == '' ? ['../../images/cameraImg.jpg']:src
         })
       }
+    })
+  },
+  textareaInput(e){
+    this.setData({
+      content: e.detail.value
     })
   },
   
 
 })
+
+function uploadImg(callback){
+  wx.chooseImage({
+    sizeType: ['original', 'compressed'],
+    sourceType: ['album', 'camera'],
+    success(res) {
+      const tempFilePaths = res.tempFilePaths[0]
+      wx.uploadFile({
+        url: app.globalData.url + 'upload/uploadImg',
+        // header:{
+        //   'contentType':'multipart/form-data'
+        // },
+        filePath: tempFilePaths,
+        name: 'upload',
+        formData: {
+          upload: 'upload',
+          header: {
+            'contentType': 'multipart/form-data'
+          },
+        },
+        success(res) {
+          const data = JSON.parse(res.data);
+          return callback(data);
+        }
+      })
+
+    }
+  })
+}

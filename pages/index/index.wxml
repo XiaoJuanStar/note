@@ -17,9 +17,9 @@
         </view>
         <view class='calendarList-item-right'>
           <view class='item-right-content'>
-            <view>
+            <view class='item-right-content_tap'>
               <view class='item-right-content_title'>{{item.note_title}}</view>
-              <p>{{item.note_content}}</p>
+              <p class="item-right-content_text">{{item.note_content}}</p>
             </view>
             <image wx:if="{{item.src!=null}}" class='item-right-content-img' mode="aspectFill" src="{{item.src}}"></image>
           </view>

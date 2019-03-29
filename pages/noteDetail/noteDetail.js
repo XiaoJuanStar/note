@@ -29,11 +29,11 @@ Page({
       },
       success:(res) =>{
         console.log('获取日记详情接口');
-        console.log(res.data);
         res.data[0]['date'] = utils.formatTime(new Date(res.data[0].created_at)); 
-        // console.log(res.data['date']);
+        let src = res.data[0].note_picture == '' ? []:res.data[0].note_picture.split(',');
         this.setData({
-          detailData: res.data[0]
+          detailData: res.data[0],
+          src: src
         })
       }
     })
