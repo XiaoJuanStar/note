@@ -13,6 +13,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     calendarList:[],
+    isSuccess:false
   },
   //事件处理函数
   bindViewTap: function() {
@@ -189,11 +190,12 @@ Page({
             console.log(tempData);
             this.setData({
               calendarList: tempData || [],
-
+              isSuccess:true
             })
           } else{
             this.setData({
-              calendarList: []
+              calendarList: [],
+              isSuccess: false
             })
           }
         },
@@ -209,10 +211,10 @@ Page({
         complete: msg => {
           wx.hideLoading()
           console.log('加载完')
-          if (this.data.calendarList.length<1){
+          if (!this.data.isSuccess){
             wx.showToast({
-              title: '加载失败',
-              image: '../../images/error.png',
+              title: '没有数据',
+              image: '../../images/tips.png',
               duration: 2000
             })
           }
