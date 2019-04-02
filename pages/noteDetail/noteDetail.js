@@ -95,7 +95,7 @@ Page({
     }
     return {
       title: '快来瞅瞅，精彩的一天',
-      path: '/pages/takeNotes/takeNotes?id=' + this.data.noteId 
+      path: '/pages/noteDetail/noteDetail?id=' + this.data.noteId 
     }
   }
 })
