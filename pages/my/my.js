@@ -24,6 +24,9 @@ Page({
    */
   onShow: function () {
     this.getNumber();
+    this.setData({
+      userInfo: app.globalData.userInfo
+    })
   },
 
 
@@ -58,7 +61,8 @@ Page({
         url: app.globalData.url + 'notes/notes/getNotesList',
         method: 'post',
         data: {
-          token: wx.getStorageSync('jwt')
+          token: wx.getStorageSync('jwt'),
+          "time": ''
         },
         success: (res) => {
           console.log('日记数量')

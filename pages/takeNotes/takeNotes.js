@@ -10,6 +10,7 @@ Page({
     title:'',
     content:'',
     noteId:null,
+    isSuccess:false
   },
   onLoad: function (options) {
     console.log(options.id)
@@ -23,22 +24,6 @@ Page({
         todayDate: utils.formatTime(new Date)
       })
     }
-  },
-  onUnload() {
-    // wx.showModal({
-    //   title: '提示',
-    //   content: '你要狠心舍弃已编辑的日记吗？',
-    //   success(res) {
-    //     if (res.confirm) {
-    //       console.log('用户点击确定')
-    //       wx.navigateBack({
-    //         delta: 999
-    //       })
-    //     } else if (res.cancel) {
-          
-    //     }
-    //   }
-    // })
   },
   chioceText(){
     let that = this;
@@ -68,6 +53,12 @@ Page({
             that.setData({
               content: str
             })
+          }else{
+            wx.showToast({
+              title: '识别失败',
+              image: '../../images/error.png',
+              duration: 2000
+            })
           }
  
       
@@ -87,12 +78,10 @@ Page({
     })
   },
   saveNotes(e){
+    let that = this;
     const {tempImg} = this.data;
-    let title = e.detail.value.title;
-    let content = e.detail.value.content;
-    console.log('===')
-    console.log(content.indexOf('\n'));
-    // content = content.split('\n').join('&ntt|&')
+    let title = encodeURIComponent(e.detail.value.title);
+    let content = encodeURIComponent(e.detail.value.content);
     const jwt = wx.getStorageSync('jwt');
     let msg = '';
     if (title == ''){
@@ -100,7 +89,10 @@ Page({
     }else if(content == ''){
       msg = '请填写正文'
     }else{
-      let src = this.data.noteId ? this.data.imageList:this.data.tempImg.join();
+      wx.showLoading({
+        title: '保存中',
+      })
+      let src = this.data.noteId ? this.data.imageList:this.data.tempImg;
       wx.request({
         url: app.globalData.url + 'notes/notes/saveNotes',
         method: 'post',
@@ -112,30 +104,41 @@ Page({
           token: jwt,
           title: title,
           content: content,
-          src: src[0] == "../../images/cameraImg.jpg" ? "" : src,
+          src: src[0] == "../../images/cameraImg.jpg" ? "" : src.join(),
           place:app.globalData.place
         },
         success: (res) => {
+         
           console.log('保存日记接口')
           console.log(res.data);
           let data = res.data;
           if (data.result){
+            wx.hideLoading();
+            that.setData({
+              isSuccess:true
+            })
             wx.navigateBack({
               delta: 999
             })
           }
         },
-        error:(err)=>{
+        fail:(err)=>{
           msg = err;
           console.log(err);
+        },
+        complete:res=>{
+          if (!that.data.isSuccess){
+            msg = '保存失败！'
+          }
         }
       })
     }
     if(msg!=''){
+      wx.hideLoading();
       wx.showToast({
         title: msg,
-        icon: 'none',
-        duration: 1000
+        image: '../../images/error.png',
+        duration: 2000
       })
     }
   },
@@ -149,21 +152,17 @@ Page({
       success: (res) => {
         res.data[0]['date'] = utils.formatTime(new Date(res.data[0].created_at));
         let src = res.data[0].note_picture === null ? [] : res.data[0].note_picture.split(',')
+        let content = decodeURIComponent(res.data[0].note_content);
+        let title = decodeURIComponent(res.data[0].note_title);
         this.setData({
           todayDate: res.data[0]['date'],
-          title: res.data[0].note_title+'',
-          content: res.data[0].note_content+'',
+          title: title,
+          content: content,
           imageList: src[0] == '' ? ['../../images/cameraImg.jpg']:src
         })
       }
     })
   },
-  textareaInput(e){
-    this.setData({
-      content: e.detail.value
-    })
-  },
-  
 
 })
 
@@ -172,21 +171,19 @@ function uploadImg(callback){
     sizeType: ['original', 'compressed'],
     sourceType: ['album', 'camera'],
     success(res) {
+      wx.showLoading({
+        title: '加载中',
+      })
       const tempFilePaths = res.tempFilePaths[0]
       wx.uploadFile({
         url: app.globalData.url + 'upload/uploadImg',
-        // header:{
-        //   'contentType':'multipart/form-data'
-        // },
+        header:{
+          'content-type':'multipart/form-data'
+        },
         filePath: tempFilePaths,
         name: 'upload',
-        formData: {
-          upload: 'upload',
-          header: {
-            'contentType': 'multipart/form-data'
-          },
-        },
         success(res) {
+          wx.hideLoading();
           const data = JSON.parse(res.data);
           return callback(data);
         }

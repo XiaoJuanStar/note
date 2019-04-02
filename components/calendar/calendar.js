@@ -1,5 +1,5 @@
 // components/calendar/calendar.js
-
+const app = getApp()
 const nowTime = new Date();
 const year = nowTime.getFullYear();
 const numMonth = nowTime.getMonth() + 1;//数字月数
@@ -58,6 +58,12 @@ Component({
           toggle: '../../images/toggle.png'
         })
       }
+    },
+    chioceDay:function(e){
+      this.setData({
+        calendarShow:true
+      })
+      this.triggerEvent('chioceDay', { time: e.target.dataset.date });
     },
     pageLeft: function () {
       let result = page('left', this.data.numMonth, this.data.year);

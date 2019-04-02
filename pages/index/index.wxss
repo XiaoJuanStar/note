@@ -104,7 +104,8 @@
   margin-top: 25rpx;
 }
 .nothing{
-  margin: 6% auto;
+  width: 75%;
+  margin: 60rpx auto;
   font-size: 26rpx;
 }
 .item-right-content_tap{

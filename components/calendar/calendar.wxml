@@ -16,7 +16,7 @@
         <image class='bar-page' src='../../images/right.png' bindtap="pageRight"></image>
       </view>
       <view class='calendar-content-list'>
-        <text class='list-item {{item.class}}' wx:for="{{calendarList}}">{{item.date}}</text>
+        <text class='list-item {{item.class}}' wx:for="{{calendarList}}" bindtap='chioceDay' data-date="{{year+'-'+numMonth+'-'+item.date}}">{{item.date}}</text>
       </view>
   </view>
 </view>

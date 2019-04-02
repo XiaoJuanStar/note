@@ -15,8 +15,13 @@
   </swiper>
 
   <view class='date'>{{detailData.date}}</view>
-  <view class='title'>{{detailData.note_title}}</view>
-  <textarea class="content">{{detailData.note_content}}</textarea> 
+  <view class='title'>{{title}}</view>
+
+  <view class='content' wx:if="{{ content.length>0 }}">
+    <view wx:for="{{content}}">{{item}}</view>
+  </view>
+
+
   <view class='location'>
     <image class='location-icon' src="../../images/ditu.png"></image>
     <text>深圳市</text>

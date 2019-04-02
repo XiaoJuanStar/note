@@ -23,9 +23,7 @@ Page({
   onLoad: function () {
     console.log('onLoad')
     let that = this;
-    // this.getUser();
 
-    // that.getUser();
     //新建百度地图对象
     let BMap = new bmap.BMapWX({
       ak:'W7hAvDTOExW6AkI4madc834p21EZwmGx'
@@ -94,23 +92,17 @@ Page({
 
   },
   onShow:function(){
-    console.log('onshow')
-  // if(app.globalData.pageType ===1){
-
-  // }else{
-    this.getUser()
-  // }
-   
-    
+    if (app.globalData.userInfo === null) {
+      this.getUser();
+     }else{
+      this.getCalendarList();
+     }
   },
-  onReady() {
-    console.log('onReady')
-    // Do something when page ready.
-    
+  onPullDownRefresh: function () {
+    console.log('下拉动作')
+    this.getUser()
   },
   getUser(){
-    console.log('1')
-    //用户没有授权的时候第一次调用
     let that = this;
     wx.login({
       success: res => {
@@ -124,7 +116,6 @@ Page({
           console.log('2')
           wx.getUserInfo({
             success: res => {
-              // console.log(res);
               app.globalData.userInfo = res.userInfo
               const { encryptedData, iv } = res || res.detail;
               wx.request({
@@ -138,7 +129,7 @@ Page({
                 success(res) {
                   let jwt = res.data;
                   wx.setStorageSync('jwt', jwt);
-                  that.getCalendarList(jwt);
+                  that.getCalendarList();
                 }
               })
               // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
@@ -146,23 +137,36 @@ Page({
               if (this.userInfoReadyCallback) {
                 this.userInfoReadyCallback(res)
               }
+            },
+            fail:err=>{
+              console.log('登录接口失败')
+            },
+            complete:msg=>{
+              console.log('加载完')
             }
           })
         }
       }
     })
   },
-  getCalendarList: function (jwt){
+  getChioceDay:function(e){
+    console.log(e.detail.time);
+    this.getCalendarList(e.detail.time)
+   
+  },
+  getCalendarList: function (time){
     wx.showLoading({
       title: '加载中',
     })
+    const jwt = wx.getStorageSync('jwt');
     if (jwt != null && jwt.toString().indexOf('<')<0){
       //获取日记列表
       wx.request({
         url: app.globalData.url + 'notes/notes/getNotesList',
         method: 'post',
         data: {
-          token: wx.getStorageSync('jwt')
+          token: jwt,
+          "time": time || ''
         },
         success: (res) => {
           wx.hideLoading()
@@ -171,19 +175,48 @@ Page({
           let tempData = [];
           console.log(data);
           if (data != null && data.length>0){
-            for (let i = 0; i < data.length; i++) {
+            for (let i = 0; i <data.length; i++) {
               let formatDate = new Date(data[i].created_at);
               data[i].day = '周' + (utils.formatDay(formatDate.getDay()) || '');
               data[i].date = formatDate.getDate();
               data[i].time = (utils.formatTime(formatDate, 'hms') || '00:00').split(' ')[1].substr(0, 5);
               data[i].src = (data[i].note_picture) != null ? data[i].note_picture.split(',')[0] : null;
+              data[i].note_content = decodeURIComponent(data[i].note_content);
+              data[i].note_title = decodeURIComponent(data[i].note_title)
               tempData.push(data[i]);
             }
+            console.log('tempData')
+            console.log(tempData);
             this.setData({
-              calendarList: tempData || []
+              calendarList: tempData || [],
+
+            })
+          } else{
+            this.setData({
+              calendarList: []
             })
           }
-        }
+        },
+        fail: err => {
+          console.log('登录接口失败')
+          wx.hideLoading()
+          wx.showToast({
+            title: '登录接口出错',
+            icon: 'fail',
+            duration: 2000
+          })
+        },
+        complete: msg => {
+          wx.hideLoading()
+          console.log('加载完')
+          if (this.data.calendarList.length<1){
+            wx.showToast({
+              title: '加载失败',
+              image: '../../images/error.png',
+              duration: 2000
+            })
+          }
+        },
       })
     }
     
@@ -191,7 +224,12 @@ Page({
    
   },
   getUserInfo: function(code) {
-    var that = this;
+    let that = this;
+    console.log('getUserInfo')
+    console.log(app.globalData.userInfo )
+    if (app.globalData.userInfo === null){
+      that.getUser()
+    }
     wx.getUserInfo({
       success(res) {
         const userInfo = res.userInfo
@@ -208,4 +246,3 @@ Page({
   },
   
 })
-

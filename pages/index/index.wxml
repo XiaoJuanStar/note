@@ -1,13 +1,13 @@
 <!--index.wxml-->
 <view class="container">
-  <calendar ></calendar>
+  <calendar bind:chioceDay="getChioceDay"></calendar>
 
   <view class='weather' wx:if="{{weatherData!=undefined}}">
     <image class='weather-icon' src='{{weatherIcon}}'></image>
     <text>{{temperature}}     {{weather}}</text>
   </view>
 
-  <view class='nothing' wx:if="{{calendarList.length<1}}">暂时没有日记，按右下方按钮开始创建日记吧！</view>
+  <view class='nothing' wx:if="{{calendarList.length<1}}">空空如也，来一篇日记吧！</view>
   <view class='calendarList' wx:else> 
     <navigator url="/pages/noteDetail/noteDetail?id={{item.id}}" hover-class="none" wx:for="{{calendarList}}">
       <view class='calendarList-item'>

@@ -7,7 +7,7 @@
 }
 
 .calendar-title{
-  font-size: 32rpx;
+  font-size: 42rpx;
   text-align: center;
 }
 .calendar-title .strong{
@@ -19,10 +19,12 @@
   margin: 0 10rpx;
 }
 .calendar-picture{
-  width:94%;
-  margin:0 auto;
-  text-align: right;
-  position: relative;
+  position:relative;
+  width:42rpx;
+  height:42rpx;
+  float:right;
+  margin-right:3%;
+
 }
 .calendar-icon{
   width: 42rpx;
@@ -30,10 +32,14 @@
 
 }
 .calendar-day{
-  font-size: 18rpx;
+  font-size:18rpx;
   position:absolute;
-  right:1.4%;
+  right:16rpx;
   top:15rpx;
+  width:10rpx;
+  display:inline-block;
+  height:10rpx;
+
 }
 .calendar-content-bar{
   color: #04a7f3;

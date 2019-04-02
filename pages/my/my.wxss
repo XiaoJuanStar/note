@@ -20,8 +20,8 @@
 }
 
 .my-picture{
-  width: 60rpx;
-  height: 60rpx;
+  width: 80rpx;
+  height: 80rpx;
   border: 1rpx solid #f8f8f8;
   border-radius: 60rpx;
   vertical-align: middle; 
